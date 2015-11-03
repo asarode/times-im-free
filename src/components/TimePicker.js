@@ -14,35 +14,42 @@ export default class TimePicker extends Component {
       selected: {},
       shiftHeld: false
     }
-
+    const { week } = props
     this.days = [
       {
         name: 'sunday',
-        code: 'sun'
+        code: 'sun',
+        date: week[0]
       },
       {
         name: 'monday',
-        code: 'mon'
+        code: 'mon',
+        date: week[1]
       },
       {
         name: 'tuesday',
-        code: 'tue'
+        code: 'tue',
+        date: week[2]
       },
       {
         name: 'wednesday',
-        code: 'wed'
+        code: 'wed',
+        date: week[3]
       },
       {
         name: 'thursday',
-        code: 'thur'
+        code: 'thur',
+        date: week[4]
       },
       {
         name: 'friday',
-        code: 'fri'
+        code: 'fri',
+        date: week[5]
       },
       {
         name: 'saturday',
-        code: 'sat'
+        code: 'sat',
+        date: week[6]
       }
     ]
 
@@ -85,7 +92,7 @@ export default class TimePicker extends Component {
     this.setState({
       selected: {
         ...this.state.selected,
-        ...{[day.code]: times}
+        ...{[day.date]: times}
       }
     })
   }

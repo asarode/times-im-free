@@ -3,8 +3,8 @@ import moment from 'moment'
 
 
 const weekStartDate = moment().day(R.negate(moment().day()))
-
-export function now(formatter = 'MMM Do') {
+const defFormat = 'ddd M/D'
+export function now(formatter = defFormat) {
   return R.range(0, 7).map(d =>
     R.clone(weekStartDate)
       .day(d)
@@ -12,7 +12,7 @@ export function now(formatter = 'MMM Do') {
   )
 }
 
-export function next(formatter = 'MMM Do') {
+export function next(formatter = defFormat) {
   return R.range(0, 7).map(d =>
     R.clone(weekStartDate)
       .day(d + 7)
@@ -20,7 +20,7 @@ export function next(formatter = 'MMM Do') {
   )
 }
 
-export function prev(formatter = 'MMM Do') {
+export function prev(formatter = defFormat) {
   return R.range(0, 7).map(d =>
     R.clone(weekStartDate)
       .day(d - 7)

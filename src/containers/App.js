@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import * as actions from '../actions/actionCreators'
 import immutable from 'immutable'
 import cx from 'classname'
+import { fetchWeek } from '../utils'
 import { TimePicker } from '../components'
 
 @connect()
@@ -19,7 +20,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <TimePicker/>
+        <TimePicker week={fetchWeek.now()}/>
       </div>
     )
   }
