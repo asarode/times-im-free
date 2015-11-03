@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM, { render } from 'react-dom'
 import cx from 'classname'
 import R from 'ramda'
+import { fetchWeek } from '../utils'
 import { DayColumn } from '.'
 
 export default class TimePicker extends Component {
