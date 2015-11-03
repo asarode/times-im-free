@@ -118,7 +118,7 @@ export default class DayColumn extends Component {
     return (
       <div className='cal-DayColumn'>
         <div className='cal-DayColumn-title cal-column-title'>
-          {day.date}
+          {day.fmt}
         </div>
         <div
           className='cal-DayColumn-times'

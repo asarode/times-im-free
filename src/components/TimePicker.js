@@ -14,44 +14,6 @@ export default class TimePicker extends Component {
       selected: {},
       shiftHeld: false
     }
-    const { week } = props
-    this.days = [
-      {
-        name: 'sunday',
-        code: 'sun',
-        date: week[0]
-      },
-      {
-        name: 'monday',
-        code: 'mon',
-        date: week[1]
-      },
-      {
-        name: 'tuesday',
-        code: 'tue',
-        date: week[2]
-      },
-      {
-        name: 'wednesday',
-        code: 'wed',
-        date: week[3]
-      },
-      {
-        name: 'thursday',
-        code: 'thur',
-        date: week[4]
-      },
-      {
-        name: 'friday',
-        code: 'fri',
-        date: week[5]
-      },
-      {
-        name: 'saturday',
-        code: 'sat',
-        date: week[6]
-      }
-    ]
 
     this.times = [...this._pushTimes('am'), ...this._pushTimes('pm')]
   }
@@ -92,9 +54,16 @@ export default class TimePicker extends Component {
     this.setState({
       selected: {
         ...this.state.selected,
-        ...{[day.date]: times}
+        ...{[day.fmt]: times}
       }
     })
+  }
+
+  get days() {
+    return this.props.week.map(date => ({
+      date,
+      fmt: date.format('ddd M/D')
+    }))
   }
 
   render() {
@@ -106,7 +75,7 @@ export default class TimePicker extends Component {
         <TimeColumn times={times}/>
         {days.map(day => (
           <DayColumn
-            key={day.code}
+            key={day.fmt}
             shouldDelete={shiftHeld}
             day={day}
             onSelection={times => this.onSelection(times, day)}/>

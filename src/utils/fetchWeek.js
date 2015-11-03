@@ -2,28 +2,16 @@ import R from 'ramda'
 import moment from 'moment'
 
 
-const weekStartDate = moment().day(R.negate(moment().day()))
-const defFormat = 'ddd M/D'
-export function now(formatter = defFormat) {
-  return R.range(0, 7).map(d =>
-    R.clone(weekStartDate)
-      .day(d)
-      .format(formatter)
-  )
+const weekStartDate = moment()
+
+export function now() {
+  return R.range(0, 7).map(d => R.clone(weekStartDate).day(d))
 }
 
-export function next(formatter = defFormat) {
-  return R.range(0, 7).map(d =>
-    R.clone(weekStartDate)
-      .day(d + 7)
-      .format(formatter)
-  )
+export function next(startWeek = [weekStartDate]) {
+  return R.range(0, 7).map(d => R.clone(startWeek[0]).day(d + 7))
 }
 
-export function prev(formatter = defFormat) {
-  return R.range(0, 7).map(d =>
-    R.clone(weekStartDate)
-      .day(d - 7)
-      .format(formatter)
-  )
+export function prev(startWeek = [weekStartDate]) {
+  return R.range(0, 7).map(d => R.clone(startWeek[0]).day(d - 7))
 }

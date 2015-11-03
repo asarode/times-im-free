@@ -14,14 +14,41 @@ import { TimePicker } from '../components'
 export default class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      week: fetchWeek.now()
+    }
+  }
+
+  onNext(e) {
+    this.setState({
+      week: fetchWeek.next(this.state.week)
+    })
+  }
+
+  onPrev(e) {
+    this.setState({
+      week: fetchWeek.prev(this.state.week)
+    })
   }
 
   render() {
+    const { week } = this.state
     return (
       <div>
-        <TimePicker week={fetchWeek.now()}/>
+        <Controls
+          onNext={e => this.onNext(e)}
+          onPrev={e => this.onPrev(e)}/>
+        <TimePicker week={week}/>
       </div>
     )
   }
+}
+
+const Controls = ({ onNext, onPrev }) => {
+  return (
+    <div>
+      <button onClick={onPrev}>← Prev</button>
+      <button onClick={onNext}>Next →</button>
+    </div>
+  )
 }
