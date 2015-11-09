@@ -7,8 +7,10 @@ import { connect } from 'react-redux'
 import * as actions from '../actions/actionCreators'
 import immutable from 'immutable'
 import cx from 'classname'
+import R from 'ramda'
+import moment from 'moment'
 import { fetchWeek } from '../utils'
-import { TimePicker } from '../components'
+import { TimePicker, TimeFormatter } from '../components'
 
 @connect()
 export default class App extends Component {
@@ -31,24 +33,55 @@ export default class App extends Component {
     })
   }
 
+  onSelection(selected) {
+    this.setState({
+      selected: selected
+    })
+  }
+
   render() {
-    const { week } = this.state
+    const { week, selected } = this.state
+    const slices = 4
     return (
       <div>
-        <Controls
-          onNext={e => this.onNext(e)}
-          onPrev={e => this.onPrev(e)}/>
-        <TimePicker week={week}/>
+        <Header/>
+        <Content>
+          <TimePicker
+            week={week}
+            slices={slices}
+            onNext={this.onNext.bind(this)}
+            onPrev={this.onPrev.bind(this)}
+            onSelection={this.onSelection.bind(this)}/>
+          <TimeFormatter
+            selected={selected}
+            slices={slices}/>
+        </Content>
+        <Footer/>
+
       </div>
     )
   }
 }
 
-const Controls = ({ onNext, onPrev }) => {
-  return (
-    <div>
-      <button onClick={onPrev}>← Prev</button>
-      <button onClick={onNext}>Next →</button>
+const Header = () => (
+  <div className='cal-Header'>
+    <div className='cal-Header-title'>
+      <h1 className='cal-Header-title-text'>Times I'm free</h1>
     </div>
-  )
-}
+    <div className='cal-Header-subtitle'>
+      <h3 className='cal-Header-subtitle-text'>
+        Select times you're free, get text to copy + paste anywhere
+      </h3>
+    </div>
+  </div>
+)
+
+const Content = ({ children }) => (
+  <div className='cal-Content'>
+    {children}
+  </div>
+)
+
+const Footer = () => (
+  <div></div>
+)

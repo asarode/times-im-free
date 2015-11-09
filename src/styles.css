@@ -1,5 +1,12 @@
+/*@import url(https://fonts.googleapis.com/css?family=Fira+Mono);*/
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono|Cutive+Mono);
+
 body {
-  font-family: 'Arimo', sans-serif;
+  /*font-family: 'Arimo', sans-serif;*/
+  font-family: 'Fira Mono' !important;
+  background-color: #410074;
+  color: #C2A4DA;
+  margin: 0;
 }
 
 .cal-TimeColumn {
@@ -9,7 +16,7 @@ body {
 
 .cal-DayColumn {
   display: inline-block;
-  width: 120px;
+  width: 75px;
   vertical-align: top;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -21,6 +28,7 @@ body {
 .cal-column-title {
   text-align: center;
   padding-bottom: 40px;
+  height: 30px;
 }
 
 .cal-TimeColumn-title {
@@ -33,6 +41,10 @@ body {
      -moz-user-select: text;
       -ms-user-select: text;
           user-select: text;
+}
+
+.cal-DayColumn-title-day {
+  font-size: 10px;
 }
 
 .cal-DayColumn-times {
@@ -111,4 +123,106 @@ body {
 
 .cal-TimeBlock-slice--selected {
   background-color: #bbff7e
+}
+
+.cal-Header {
+  background-color: #2F0054;
+  padding:  20px 60px;
+  padding-top: 80px;
+}
+
+.cal-Header-title {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.cal-Header-title-text {
+  color: #F1F1F1;
+  font-size: 36px;
+}
+
+.cal-Header-subtitle {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-left: 45px;
+}
+
+.cal-Header-subtitle-text {
+  font-size: 14px;
+}
+
+.cal-TimePicker {
+  display: inline-block;
+  box-shadow: 0px 0px 30px 0px rgba(47, 0, 84, 0.32);
+}
+
+.cal-Controls {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #FAE8D1;
+  color: #474747;
+}
+
+.cal-Controls-button {
+  display: inline-block;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  border: none;
+  color: #C2A4DA;
+}
+
+.cal-Controls-button {
+  background-color: #FAE8D1;
+  color: #474747;
+}
+
+.cal-Controls-button:first-child {
+  /*background-color: #2F0054;*/
+}
+
+.cal-Controls-button:last-child {
+  /*background-color: #2F0054;*/
+}
+
+.cal-Controls-month {
+  display: inline-block;
+  /*background-color: #2F0054;*/
+  padding: 0 60px;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+
+.cal-Controls-month-text {
+  text-align: center;
+  color: #2F0054;
+}
+
+.cal-Content {
+  margin-top: 60px;
+  padding-left: 60px;
+  padding-right: 60px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.cal-TimePicker-tool {
+  padding: 30px;
+  background-color: #FFF3E3;
+  color: #474747;
+}
+
+.cal-TimeText {
+  background: #FFFFFF;
+  box-shadow: inset 0px 0px 4px 0px rgba(64,0,116,0.83);
+  border-radius: 3px;
+  font-size: 14px;
+  color: #474747;
+  min-height: 200px;
+  min-width: 300px;
 }

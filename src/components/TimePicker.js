@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM, { render } from 'react-dom'
 import cx from 'classname'
 import R from 'ramda'
+import moment from 'moment'
 import { fetchWeek } from '../utils'
 import { DayColumn } from '.'
 
@@ -16,6 +17,19 @@ export default class TimePicker extends Component {
     }
 
     this.times = [...this._pushTimes('am'), ...this._pushTimes('pm')]
+  }
+
+  static PropTypes = {
+    week: PropTypes.array,
+    slices: PropTypes.number,
+    onNext: PropTypes.func,
+    onPrev: PropTypes.func,
+    onSelection: PropTypes.func
+  }
+
+  static defaultProps = {
+    week: fetchWeek.now(),
+    slices: 4
   }
 
   componentDidMount() {
@@ -51,12 +65,17 @@ export default class TimePicker extends Component {
   }
 
   onSelection(times, day) {
+    const { selected } = this.state
+    const { onSelection } = this.props
+    const updateTimes = { [day.date.valueOf()]: times }
+    const newSelected = {
+      ...selected,
+      ...updateTimes
+    }
     this.setState({
-      selected: {
-        ...this.state.selected,
-        ...{[day.fmt]: times}
-      }
+      selected: newSelected
     })
+    onSelection(newSelected)
   }
 
   get days() {
@@ -69,17 +88,25 @@ export default class TimePicker extends Component {
   render() {
     const { days, times } = this
     const { shiftHeld } = this.state
+    const { onNext, onPrev } = this.props
+    const slices = 4
     return (
-      <div>
-        <p>{JSON.stringify(this.state.selected)}</p>
-        <TimeColumn times={times}/>
-        {days.map(day => (
-          <DayColumn
-            key={day.fmt}
-            shouldDelete={shiftHeld}
-            day={day}
-            onSelection={times => this.onSelection(times, day)}/>
-        ))}
+      <div className='cal-TimePicker'>
+        <Controls
+          month={this.days[0].date}
+          onNext={e => onNext(e)}
+          onPrev={e => onPrev(e)}/>
+        <div className='cal-TimePicker-tool'>
+          <TimeColumn times={times}/>
+          {days.map(day => (
+            <DayColumn
+              key={day.fmt}
+              shouldDelete={shiftHeld}
+              day={day}
+              slices={slices}
+              onSelection={times => this.onSelection(times, day)}/>
+          ))}
+        </div>
       </div>
     )
   }
@@ -112,6 +139,18 @@ const TimeColumn = ({ times }) => {
         CDT
       </div>
       {timeLabels}
+    </div>
+  )
+}
+
+const Controls = ({ month, onNext, onPrev }) => {
+  return (
+    <div className='cal-Controls'>
+      <button className='cal-Controls-button' onClick={onPrev}>← Prev</button>
+      <div className='cal-Controls-month'>
+        <h2 className='cal-Controls-month-text'>{month.format('MMMM').toUpperCase()}</h2>
+      </div>
+      <button className='cal-Controls-button' onClick={onNext}>Next →</button>
     </div>
   )
 }

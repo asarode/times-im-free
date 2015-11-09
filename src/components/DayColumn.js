@@ -19,7 +19,8 @@ export default class DayColumn extends Component {
   static PropTypes = {
     shouldDelete: PropTypes.bool.isRequired,
     day: PropTypes.object,
-    onSelection: PropTypes.func
+    onSelection: PropTypes.func,
+    slices: PropTypes.number
   }
 
   onTimeDown(e, hour) {
@@ -36,16 +37,17 @@ export default class DayColumn extends Component {
   onTimeUp(e, hour) {
     const { selecting, selected } = this.state
     const { onSelection, day } = this.props
+    const newSelected = {
+      ...selected,
+      ...selecting
+    }
     this.setState({
       active: false,
       selecting: {},
-      selected: {
-        ...selected,
-        ...selecting
-      },
+      selected: newSelected,
       selectionStart: null
     })
-    onSelection({...selected, ...selecting})
+    onSelection(newSelected)
   }
 
   onTimeOver(e, hour, numSlices) {
@@ -77,19 +79,11 @@ export default class DayColumn extends Component {
     })
   }
 
-  timeBlocks(numSlices) {
-    if (numSlices < 1) {
-      throw(
-        `Enter an appropriate time slice. For example, you can split an hour in
-        4 slices, or 3 slices, but it doesn't make sense to slice it in
-        0.5 slices.
-        `
-      )
-    }
-
+  get timeBlocks() {
+    const { slices } = this.props
     return R.range(0, 24).map(hour => (
       <div key={hour} className='cal-TimeBlock'>
-        {this.timeSlices(numSlices, hour)}
+        {this.timeSlices(slices, hour)}
       </div>
       )
     )
@@ -118,12 +112,17 @@ export default class DayColumn extends Component {
     return (
       <div className='cal-DayColumn'>
         <div className='cal-DayColumn-title cal-column-title'>
-          {day.fmt}
+          <div className='cal-DayColumn-title-day'>
+            {day.date.format('dddd')}
+          </div>
+          <div className='cal-DayColumn-title-date'>
+            {day.date.format('Do')}
+          </div>
         </div>
         <div
           className='cal-DayColumn-times'
           onMouseLeave={e => this.onTimeLeave(e)}>
-          {this.timeBlocks(4)}
+          {this.timeBlocks}
         </div>
       </div>
     )
